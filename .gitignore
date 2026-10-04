@@ -1,3 +1,22 @@
-.local/
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Local state & caches
+.local/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Scratch & test outputs
+scratch/
+test-output/
+*.log
