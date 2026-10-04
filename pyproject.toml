@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-dashboard"
+version = "0.1.0"
+description = "Private agent fleet operations, hourly utilization, and usage accounting dashboard"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+agent-dashboard = "dashboard.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
