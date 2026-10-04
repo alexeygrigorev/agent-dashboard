@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Verify ordinary Git backup and restore in a disposable temporary directory.
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+# Verify ordinary Git backup and restore from the private remote repository.
+REMOTE_URL="git@github.com:alexeygrigorev/agent-dashboard.git"
 
 DISPOSABLE_DIR=$(mktemp -d -t agent-dashboard-restore-XXXXXX)
 trap 'rm -rf "$DISPOSABLE_DIR"' EXIT
 
-echo "Testing restore to disposable checkout: $DISPOSABLE_DIR"
-git clone "$REPO_ROOT" "$DISPOSABLE_DIR"
+echo "Testing restore to disposable checkout from remote: $REMOTE_URL"
+git clone --depth 1 "$REMOTE_URL" "$DISPOSABLE_DIR"
 
 cd "$DISPOSABLE_DIR"
 PYTHONPATH=src python3 -m unittest discover -s tests
 
-echo "Restore verification passed successfully."
+echo "Remote restore verification passed successfully."
