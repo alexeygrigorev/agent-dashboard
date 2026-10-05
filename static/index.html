@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Fleet Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="dashboard.js" defer></script>
+</head>
+<body>
+  <header class="page-head">
+    <div>
+      <h1>Autonomous Agent Fleet Operational Dashboard</h1>
+      <p class="subtitle">Rolling 24-hour utilization (UTC, half-open buckets), usage accounting, and completed features</p>
+    </div>
+    <div class="head-side">
+      <span id="health-status" class="badge badge-pending" role="status">health: checking&hellip;</span>
+    </div>
+  </header>
+
+  <section class="controls" aria-label="Refresh controls">
+    <div class="window-line" id="window-info">Window: loading&hellip; (fetching /api/hourly)</div>
+    <div class="refresh-row">
+      <label for="as-of-input">as_of (UTC, optional):</label>
+      <input id="as-of-input" type="datetime-local" step="3600" aria-describedby="asof-help">
+      <button id="refresh-btn" type="button">Refresh</button>
+      <span id="refresh-status" class="muted" role="status">idle</span>
+    </div>
+    <p id="asof-help" class="muted small">Leave blank for server time. When set, the client passes <code>?as_of=&lt;ISO8601&gt;</code> to <code>/api/hourly</code>.</p>
+    <p id="shared-note" class="note">Shared-agent accounting: counts are non-additive across projects (loading&hellip;).</p>
+    <p id="hourly-error" class="error-banner" hidden></p>
+  </section>
+
+  <main>
+    <div class="grid" id="project-grid">
+      <section class="card" id="agent-branches" aria-label="AgentBranches utilization">
+        <h2>AgentBranches</h2>
+        <p class="proj-sub"><code>agent-branches</code> <span id="unknown-agent-branches" class="badge badge-unknown" hidden>unknown</span></p>
+        <dl class="metrics">
+          <div><dt>Unique agents</dt><dd id="unique-agent-branches">loading&hellip;</dd></div>
+          <div><dt>Total agent-hours</dt><dd id="hours-agent-branches">loading&hellip;</dd></div>
+          <div><dt>Coverage</dt><dd id="coverage-agent-branches">loading&hellip;</dd></div>
+          <div><dt>Unattributed hours</dt><dd id="unattrib-agent-branches">loading&hellip;</dd></div>
+        </dl>
+        <h3>Hourly buckets (UTC, 24 &times; 1h)</h3>
+        <div class="chart" id="chart-agent-branches" aria-label="Hourly bar chart for agent-branches">
+          <p class="muted">chart loading&hellip;</p>
+        </div>
+        <p class="muted small axis-note">Bars show agent-hours per half-open bucket <code>[start, end)</code> in UTC. Hover/tap a bar for exact bounds.</p>
+      </section>
+
+      <section class="card" id="agent-dashboard" aria-label="Agent Dashboard utilization">
+        <h2>Agent Dashboard</h2>
+        <p class="proj-sub"><code>agent-dashboard</code> <span id="unknown-agent-dashboard" class="badge badge-unknown" hidden>unknown</span></p>
+        <dl class="metrics">
+          <div><dt>Unique agents</dt><dd id="unique-agent-dashboard">loading&hellip;</dd></div>
+          <div><dt>Total agent-hours</dt><dd id="hours-agent-dashboard">loading&hellip;</dd></div>
+          <div><dt>Coverage</dt><dd id="coverage-agent-dashboard">loading&hellip;</dd></div>
+          <div><dt>Unattributed hours</dt><dd id="unattrib-agent-dashboard">loading&hellip;</dd></div>
+        </dl>
+        <h3>Hourly buckets (UTC, 24 &times; 1h)</h3>
+        <div class="chart" id="chart-agent-dashboard" aria-label="Hourly bar chart for agent-dashboard">
+          <p class="muted">chart loading&hellip;</p>
+        </div>
+        <p class="muted small axis-note">Bars show agent-hours per half-open bucket <code>[start, end)</code> in UTC. Hover/tap a bar for exact bounds.</p>
+      </section>
+
+      <section class="card" id="quota-launcher" aria-label="Quota-Aware Launcher utilization">
+        <h2>Quota-Aware Launcher</h2>
+        <p class="proj-sub"><code>quota-launcher</code> <span id="unknown-quota-launcher" class="badge badge-unknown" hidden>unknown</span></p>
+        <dl class="metrics">
+          <div><dt>Unique agents</dt><dd id="unique-quota-launcher">loading&hellip;</dd></div>
+          <div><dt>Total agent-hours</dt><dd id="hours-quota-launcher">loading&hellip;</dd></div>
+          <div><dt>Coverage</dt><dd id="coverage-quota-launcher">loading&hellip;</dd></div>
+          <div><dt>Unattributed hours</dt><dd id="unattrib-quota-launcher">loading&hellip;</dd></div>
+        </dl>
+        <h3>Hourly buckets (UTC, 24 &times; 1h)</h3>
+        <div class="chart" id="chart-quota-launcher" aria-label="Hourly bar chart for quota-launcher">
+          <p class="muted">chart loading&hellip;</p>
+        </div>
+        <p class="muted small axis-note">Bars show agent-hours per half-open bucket <code>[start, end)</code> in UTC. Hover/tap a bar for exact bounds.</p>
+      </section>
+
+      <section class="card" id="agent-coordination" aria-label="Cross-computer Agent Coordination utilization">
+        <h2>Cross-computer Agent Coordination</h2>
+        <p class="proj-sub"><code>agent-coordination</code> <span id="unknown-agent-coordination" class="badge badge-unknown" hidden>unknown</span></p>
+        <dl class="metrics">
+          <div><dt>Unique agents</dt><dd id="unique-agent-coordination">loading&hellip;</dd></div>
+          <div><dt>Total agent-hours</dt><dd id="hours-agent-coordination">loading&hellip;</dd></div>
+          <div><dt>Coverage</dt><dd id="coverage-agent-coordination">loading&hellip;</dd></div>
+          <div><dt>Unattributed hours</dt><dd id="unattrib-agent-coordination">loading&hellip;</dd></div>
+        </dl>
+        <h3>Hourly buckets (UTC, 24 &times; 1h)</h3>
+        <div class="chart" id="chart-agent-coordination" aria-label="Hourly bar chart for agent-coordination">
+          <p class="muted">chart loading&hellip;</p>
+        </div>
+        <p class="muted small axis-note">Bars show agent-hours per half-open bucket <code>[start, end)</code> in UTC. Hover/tap a bar for exact bounds.</p>
+      </section>
+    </div>
+
+    <section class="panel" id="usage-section" aria-label="Usage accounting">
+      <h2>Usage accounting</h2>
+      <p class="muted small">Token fields may be null (shown as <code>n/a</code>, never 0). Quota deltas are tracked separately from cost/tokens. Reasoning tokens are never added to output tokens.</p>
+      <p id="usage-error" class="error-banner" hidden></p>
+      <div class="table-wrap">
+        <table id="usage-table">
+          <caption class="muted">Per-project usage aggregates from <code>/api/usage</code></caption>
+          <thead>
+            <tr>
+              <th scope="col">Project</th>
+              <th scope="col">Events</th>
+              <th scope="col">Input</th>
+              <th scope="col">Output</th>
+              <th scope="col">Cache read</th>
+              <th scope="col">Cache created</th>
+              <th scope="col">Reasoning</th>
+              <th scope="col">Quota delta</th>
+              <th scope="col">Flags</th>
+            </tr>
+          </thead>
+          <tbody id="usage-body">
+            <tr><td colspan="9" class="muted">usage loading&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="features-section" aria-label="Completed features">
+      <h2>Completed features</h2>
+      <p class="muted small">Accepted-task evidence joined to feature completions from <code>/api/features</code>. Repeated reviews/commits are not counted as features.</p>
+      <p id="features-error" class="error-banner" hidden></p>
+      <div id="features-list">
+        <p class="muted">features loading&hellip;</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-foot">
+    <p class="muted small">Legend: <code>unknown</code> = source reported unknown state; <code>n/a</code> = field was null/missing (never rendered as 0). Buckets are half-open <code>[start, end)</code> in UTC. Per-project agent counts are non-additive when identities are shared.</p>
+    <noscript><p class="error-banner">JavaScript is disabled: live metrics require fetch to /api/hourly, /api/usage, /api/features. Static layout above is the offline fallback.</p></noscript>
+  </footer>
+</body>
+</html>
