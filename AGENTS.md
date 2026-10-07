@@ -1,5 +1,11 @@
 # Agent Dashboard
 
+## What this project works toward
+
+Make Agent Dashboard show measured numbers only, which are agents run, tokens used, features done and tasks resolved, by hour, per project and per team, and publish the history as readable charts on the public site.
+
+Heads read ~/git/cloudflare-agent-git/_docs/team/04-head.md for the role and ~/git/cloudflare-agent-git/_docs/04-communication.md for messaging.
+
 Read /home/alexey/git/cloudflare-agent-git/AGENTS.md, coordination/OPERATING-MODEL.md, and coordination/RESOURCE-POLICY.md, and ~/git/.agents/skills/a2a-communication/SKILL.md plus external-model-agents/SKILL.md.
 
 User authorizes this standalone private project, private GitHub backup, Agent Branches as primary development platform where verified, ordinary Git recovery, useful external execution, and independent review. No purchases, Copilot, Rust builds/installs, secrets in Git, deleting worktrees, changing dirty quse/aplexer, or busy-pane injection. Claude/Codex sparse.
