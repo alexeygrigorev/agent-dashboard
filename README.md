@@ -1,3 +1,6 @@
+> **Deprecated: superseded by [Agent Hub](https://github.com/alexeygrigorev/agent-hub).**
+> Use Agent Hub for fleet dashboards and machine, subscription, agent and session status. Existing accounting collectors remain compatibility producers until their migration is verified. See the [migration guide](https://github.com/alexeygrigorev/agent-hub/blob/main/docs/GENERIC-HUB.md).
+
 # Agent Dashboard
 
 Standalone private operational dashboard for autonomous agent fleet monitoring across the three authorized projects:
